@@ -1,0 +1,72 @@
+.login-page{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.login-header h2{
+    font-size: 30px;
+    font-family: 'Trebuchet MS', sans-serif;;
+    color: white;
+    text-shadow: 3px 4px 5px rgba(0, 0, 0, 1)
+}
+.login-main-container{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+    min-width: max-content;
+    align-items: center;
+    background-color: #4A4E69;
+    padding: 20px 0;
+    padding-bottom: 40px;
+}
+.login-form-container {
+    border-radius: 20px;
+    background-color: white;
+    padding: 25px;
+    box-shadow: 0 0 10px black;
+}
+
+.login-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.login-form-container label{
+    font-size: 16px;
+}
+.login-form-container input[type="email"],
+.login-form-container input[type="password"],
+.login-form-container input[type="submit"] {
+    margin-bottom: 5px;
+    width: 330px;
+}
+
+.main-container-footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.main-container-footer a {
+    text-decoration: none;
+
+}
+.main-container-footer a:hover{
+    text-decoration: underline;
+}
+.quote-button{
+    padding: 12px 24px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: #22223b;
+    color: #f2e9e4;
+    font-size: 16px;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  .quote-button:hover {
+  background-color: #4A4E69;
+  transform: scale(1.05);
+  }

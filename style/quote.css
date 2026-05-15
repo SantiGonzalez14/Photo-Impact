@@ -1,0 +1,71 @@
+.quote-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  font-family: 'Trebuchet MS','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+#mainContainer{
+    padding: 50px 0;
+    display:flex;
+    flex-grow: 1;
+    background-color: #4A4E69;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+
+  #containerQuote{
+    box-shadow: 0 0 10px black;
+    padding: 15px;
+    min-height: max-content;
+    min-width: max-content;
+    width: 150px;
+    background-color:white;
+    border-radius: 25px;
+    position: relative;
+    margin: 0;
+    text-align: center;
+  }
+
+  #containerResult{
+    box-shadow: 0 0 10px black;
+    padding: 15px;
+    min-height: max-content;
+    min-width: max-content;
+    width: 150px;
+    background-color:white;
+    border-radius: 25px;
+    position: relative;
+    margin: 0;
+    display: none;
+  }
+  body.quote-page label{
+    display: inline-block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  body.quote-page select{
+    min-width: 100%;
+    padding: 8px;
+    margin: 5px;
+  }
+  
+  #containerResult ul{
+    margin:0;
+    padding: 20px;
+  }
+  #containerResult ul li{
+    margin-bottom: 10px;
+  }
+  #containerResult label,
+  #containerResult select,
+  #containerResult input {
+    display: block;
+    width: 100%;
+  }
+  body.quote-page h2{
+    text-align: center;
+  }

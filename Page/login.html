@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/footer.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/login.css">
+    <title>Photo Impact</title>
+</head>
+<body class="login-page">
+    <div id="header-container"></div>
+
+    <div class="login-main-container">
+        <header class="login-header">
+            <h2>Good to see you again</h2>
+        </header>
+        <div class="login-form-container">
+            <form id="login-form">
+                <label for="email">Your email</label>
+                <input type="email" id="email" class="text-input" placeholder="e.g. email@gmail.com">
+                
+                <label for="password">Your password</label>
+                <input type="password" id="password" class="text-input" placeholder="*************">
+                
+                <div id="error-message" style="color: red; margin-top: 10px;"></div>
+                
+                <input type="submit" value="Login" class="submit-button" style="padding: 5px; border-radius: 25px; max-width: 150px; margin: auto;">
+            </form>
+
+            <div class="main-container-footer">
+                <a href="../Page/signUp.html">Don't have an account?</a>
+                <a href="#toBeImplemented" class="footer-right-item">Forgot password?</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/loadHeader.js"></script>
+    <script src="../js/loadFooter.js"></script>
+    <script>
+        // Attach the form submission handler once the DOM is loaded
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("login-form").addEventListener("submit", function (e) {
+                e.preventDefault(); // Prevent form from reloading the page
+
+                const users = JSON.parse(localStorage.getItem("users")) || [];
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+                const errorMessage = document.getElementById("error-message");
+
+                const user = users.find(u => u.email === email);
+
+                if (!email || !password) {
+                    errorMessage.textContent = "Please enter both email and password.";
+                } else if (!user || user.password !== password) {
+                    errorMessage.textContent = "Invalid email or password.";
+                } else {
+                    errorMessage.textContent = ""; // Clear error
+                    alert("Login succesful!");
+                    localStorage.setItem("loggedInUser", JSON.stringify(user));
+                    window.location.href = "index.html"; // Redirect to home page
+                }
+            });
+        });
+    </script>
+</body>
+</html>

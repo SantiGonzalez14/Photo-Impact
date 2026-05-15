@@ -1,0 +1,104 @@
+.home-page{
+    margin: 0;
+    background-color: #ffffff;
+    font-family: 'Trebuchet MS','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.welcome-message {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding-top: 20px;
+  color: #22223b;
+  background-color: #f7f7f7;
+}
+.intro-section {
+  padding: 40px 20px;
+  background-color: #f7f7f7;
+  margin: auto;
+}
+
+.intro-section h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #22223b;
+  margin-bottom: 20px;
+}
+
+.intro-section p {
+  max-width: 800px;
+  margin: 10px auto;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.card{
+    padding: 9px;
+    padding-bottom: 5px;
+    background-color: white;
+    box-shadow: 0 0 15px black;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.grid-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: space-evenly;
+    padding: 10px;
+    margin: 10px auto 20px;
+    max-width: 1400px;
+}
+.card-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* optional: "contain" or "cover" depending on look */
+  display: block;
+  transition: transform 0.3s ease;
+}
+.card-image:hover {
+  transform: scale(1.05);
+}
+.card h3 {
+  font-size: 1.2rem;
+  margin: 15px 10px;
+}
+.card p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 10px 10px;
+}
+.card-link {
+  margin: auto 10px 15px;
+  text-decoration: none;
+  color: #4A4E69;
+  font-weight: bold;
+}
+.card-link:hover {
+  color: #9A8C98;
+}
+.quote-cta {
+  background-color: #f2e9e4;
+  text-align: center;
+  padding: 50px 20px;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+}
+
+.quote-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #22223b;
+}
+
+.quote-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #4A4E69;
+}
+
