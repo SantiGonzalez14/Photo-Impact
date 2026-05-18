@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +12,50 @@
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/footer.css">
     <link rel="stylesheet" href="../style/index.css">
+    <style>
+
+        .welcome-message {
+            text-align: center;
+            font-size: 1.25em;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #2c3e50;
+            max-width: 1200px;
+            font-family: Arial, sans-serif;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .logout-link {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #e74c3c;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        .logout-link:hover {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+    </style>
 </head>
 
 <body class="home-page">
     <div id="header-container"></div>
-    <div class="welcome-message" id="welcomeMessage"></div>
+    
+    <?php
+if (isset($_SESSION["name"])) {
+    echo "<div class='welcome-message'>";
+    echo "Welcome back, <strong>" . htmlspecialchars($_SESSION["name"]) . "</strong>!";
+    echo " <a href='../logout.php' class='logout-link'>Log Out</a>";
+    echo "</div>";
+}
+?>
+
     <section class="intro-section">
         <h1>Professional Photography</h1>
         <p>
@@ -33,7 +75,6 @@
     <div class="grid-container">
         <div class="card">
             <a href="../Page/quinceanos.html"><img src="../images/5.jpg" class="card-image" width="200px" height="300px"  loading="lazy"></a>
-            
             <h3>Quinceaños</h3>
             <p>A quinceañera is more than just a celebration — 
                 it’s a once-in-a-lifetime moment when a girl steps 
@@ -75,19 +116,9 @@
         <p>Tell us what you’re looking for and we’ll get back to you with a personalized quote.</p>
         <a href="../Page/quote.html" class="submit-button" style="text-decoration: none;">Make a Quote</a>
     </section>
+
     <div id="footer-container"></div>
     <script src="../js/loadFooter.js"></script>
-    <script>
-        // Show welcome message if user is logged in
-        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-        
-        if (loggedInUser && loggedInUser.name) {
-            document.getElementById("welcomeMessage").textContent =
-            `Welcome back, ${loggedInUser.name}!`;
-        } else {
-            document.getElementById("welcomeMessage").textContent = "";
-        }
-    </script>
-<script src="../js/loadHeader.js"></script>
+    <script src="../js/loadHeader.js"></script>
 </body>
 </html>
