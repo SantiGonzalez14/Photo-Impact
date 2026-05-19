@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Photo Impact</title>
+
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/quote.css">
     <link rel="stylesheet" href="../style/style.css">
@@ -11,59 +14,133 @@
 </head>
 
 <body class="quote-page">
+
     <div id="header-container"></div>
+
     <div id="mainContainer">
+
         <div id="containerQuote">
-            <form id="quote">
-                <h2 style="margin: 5px;">Event details</h2>
-                <label for="type-of-event">Choose the type of event:</label>
-                    <select name="type-of-event" id="type-of-event">
-                        <option value="Quinceaños">Quinceaños</option>
-                        <option value="Wedding">Wedding</option>
-                        <option value="Photoshoot">Photoshoot</option>
-                        <option value="Corporate Event">Corporate Event</option>
-                    </select>
+
+            <form id="quote" action="/MAC272/Project/php/quote.php" method="POST">
+
+                <h2 style="margin: 5px;">
+                    Event details
+                </h2>
+
+                <!-- EVENT TYPE -->
+                <label for="type-of-event">
+                    Choose the type of event:
+                </label>
+
+                <select name="type-of-event" id="type-of-event">
+
+                    <option value="Quinceaños">
+                        Quinceaños
+                    </option>
+
+                    <option value="Wedding">
+                        Wedding
+                    </option>
+
+                    <option value="Photoshoot">
+                        Photoshoot
+                    </option>
+
+                    <option value="Corporate Event">
+                        Corporate Event
+                    </option>
+
+                </select>
+
                 <br>
-                <label for="physical-pictures"> I want a physical album</label>
-                <input type="radio" id="physical-pictures" name="type-of-pictures" checked>
-                <label for="digital-pictures"> I want digital pictures</label>
-                <input type="radio" id="digital-pictures" name="type-of-pictures">
+
+                <!-- PHOTO TYPE -->
+                <label for="physical-pictures">
+                    I want a physical album
+                </label>
+
+                <input
+                    type="radio"
+                    id="physical-pictures"
+                    name="type_of_pictures"
+                    value="physical"
+                    checked
+                >
+
+                <label for="digital-pictures">
+                    I want digital pictures
+                </label>
+
+                <input
+                    type="radio"
+                    id="digital-pictures"
+                    name="type_of_pictures"
+                    value="digital"
+                >
+
                 <br>
-                <label for="no-of-pics" id="lbl-no-of-pics">Number of pictures</label>
-                    <select name="no-of-pics" id="no-of-pics">
-                        <option value="50">50</option>
-                        <option value="70">70</option>
-                        <option value="100">100</option>
-                        <option value="+100">+100</option>
-                    </select>
-                <div id="extra-pics-section" style="display: none; margin-top: 10px;">
-                    <label for="extra-pics">Enter total number of pictures:</label>
-                    <input type="number" id="extra-pics" min="101" placeholder="e.g. 120">
-                    <p style="font-size: 12px;">It's $10 per extra picture after 100.</p>
+
+                <!-- NUMBER OF PICTURES -->
+                <label for="no-of-pics" id="lbl-no-of-pics">
+                    Number of pictures
+                </label>
+
+                <select name="no-of-pics" id="no-of-pics">
+
+                    <option value="50">50</option>
+                    <option value="70">70</option>
+                    <option value="100">100</option>
+                    <option value="100_plus">+100</option>
+
+                </select>
+
+                <!-- EXTRA PICTURES -->
+                <div
+                    id="extra-pics-section"
+                    style="display: none; margin-top: 10px;"
+                >
+
+                    <label for="extra-pics">
+                        Enter total number of pictures:
+                    </label>
+
+                    <input
+                        type="number"
+                        id="extra-pics"
+                        name="extra_pics"
+                        min="101"
+                        placeholder="e.g. 120"
+                    >
+
+                    <p style="font-size: 12px;">
+                        It's $10 per extra picture after 100.
+                    </p>
+
                 </div>
-                    <button type="button" class="submit-button" onclick="generateQuote()">Make a quote</button>
+
+                <br>
+
+                <!-- SUBMIT BUTTON -->
+                <button
+                    type="submit"
+                    class="submit-button"
+                >
+                    Make a quote
+                </button>
+
             </form>
+
         </div>
-        <div id="containerResult">
-            <h2 style="margin: 5px;">Your quote</h2>
-            <hr>
-            <ul>
-                <li id="p-event-selected"></li>
-                <li id="p-type-of-pics"></li>
-                <li id="p-number-of-pics"></li>
-            </ul>
-            <p id="p-quote-price">The coverage of the event is: $</p>
-            <p>If you have any questions, <a href="/MAC272/Project/Page/contactUs.html">Contact us</a></p>
-            <div class="buttons-section">
-                <button onclick="hideQuote()" class="quote-button">Generate a new quote</button>
-                <button onclick="sendQuote()" class="quote-button">Let's do it</button>
-            </div>
-        </div>
+
     </div>
+
     <div id="footer-container"></div>
+
+    <!-- SCRIPTS -->
     <script src="../js/script.js"></script>
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
-    
+
 </body>
+
 </html>
