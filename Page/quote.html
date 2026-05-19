@@ -32,21 +32,21 @@
                     Choose the type of event:
                 </label>
 
-                <select name="type-of-event" id="type-of-event">
+                <select name="type_of_event" id="type-of-event">
 
-                    <option value="Quinceaños">
+                    <option value="quince">
                         Quinceaños
                     </option>
 
-                    <option value="Wedding">
+                    <option value="wedding">
                         Wedding
                     </option>
 
-                    <option value="Photoshoot">
+                    <option value="photoshoot">
                         Photoshoot
                     </option>
 
-                    <option value="Corporate Event">
+                    <option value="corporate">
                         Corporate Event
                     </option>
 
@@ -85,7 +85,7 @@
                     Number of pictures
                 </label>
 
-                <select name="no-of-pics" id="no-of-pics">
+                <select name="no_of_pics" id="no-of-pics">
 
                     <option value="50">50</option>
                     <option value="70">70</option>
@@ -119,6 +119,44 @@
                 </div>
 
                 <br>
+
+                <!-- DATE OF EVENT-->
+                <label for="event-date">
+                    Date of the event:
+                </label>
+
+                <input
+                    type="date"
+                    id="event-date"
+                    name="event_date"
+                >
+                <br>
+
+                <!-- LOCATION OF EVENT-->
+                <label for="event-location">
+                    Location of the event:
+                </label>
+                <input
+                    type="text"
+                    id="event-location"
+                    name="event_location"
+                    placeholder="e.g. New York City"
+                >
+                <br>
+
+                 <!-- SPECIAL REQUESTS-->
+
+                <label for="special-requests">
+                    Any special requests?
+                </label>
+
+                <textarea
+                    id="special-requests"
+                    name="special_requests"
+                    placeholder="Please specify any special requests you have..."
+                    rows="10"
+                ></textarea>
+
 
                 <!-- SUBMIT BUTTON -->
                 <button

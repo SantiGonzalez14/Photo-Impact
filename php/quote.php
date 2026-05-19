@@ -6,10 +6,22 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 
 // FORM DATA
-$eventType = $_POST["type-of-event"];
+$eventType = $_POST["type_of_event"];
 $pictureType = $_POST["type_of_pictures"];
-$numPics = $_POST["no-of-pics"];
+$numPics = $_POST["no_of_pics"];
+$eventDate = $_POST["event_date"];
+$location = $_POST["event_location"];
+$specialRequests = $_POST["special_requests"] ?? "";
 
+if($eventType === "quince") {
+    $eventType = "Quinceaños";
+} elseif ($eventType === "wedding") {
+    $eventType = "Wedding";
+} elseif ($eventType === "photoshoot") {
+    $eventType = "Photoshoot";
+} elseif ($eventType === "corporate") {
+    $eventType = "Corporate Event";
+}
 
 $price = 0;
 
@@ -136,7 +148,19 @@ else {
                         <?php endif; ?>
     
                     </li>
-    
+
+                    <li>
+                        <strong>Event date:</strong>
+                        <?= htmlspecialchars($eventDate) ?>
+                    </li>
+                    <li>
+                        <strong>Event location:</strong>
+                        <?= htmlspecialchars($location) ?>
+                    </li>
+                    <li>
+                        <strong>Special requests:</strong>
+                        <?= htmlspecialchars($specialRequests) ?>
+                    </li>
                 </ul>
     
                 <p id="p-quote-price">
@@ -169,23 +193,23 @@ else {
 
                     </a>
 
-                    <form action="/save_quote.php" method="POST">
+                    <form action="./save_quote.php" method="POST">
 
                         <input
                             type="hidden"
-                            name="event_type"
+                            name="type_of_event"
                             value="<?= htmlspecialchars($eventType) ?>"
                         >
 
                         <input
                             type="hidden"
-                            name="picture_type"
+                            name="type_of_pictures"
                             value="<?= htmlspecialchars($pictureType) ?>"
                         >
 
                         <input
                             type="hidden"
-                            name="num_pics"
+                            name="no_of_pics"
                             value="<?= htmlspecialchars($numPics) ?>"
                         >
 
@@ -199,6 +223,24 @@ else {
                             type="hidden"
                             name="extra_pics"
                             value="<?= htmlspecialchars($extraPics ?? '') ?>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="event_date"
+                            value="<?= htmlspecialchars($eventDate) ?>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="event_location"
+                            value="<?= htmlspecialchars($location) ?>"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="special_requests"
+                            value="<?= htmlspecialchars($specialRequests) ?>"
                         >
 
                         <button
@@ -225,17 +267,6 @@ else {
     <!-- SCRIPTS -->
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
-
-    <script>
-
-        function saveQuote() {
-
-            alert(
-                "Your quote has been saved, you will be contacted soon to confirm date and location of event."
-            );
-        }
-
-    </script>
 
 </body>
 
