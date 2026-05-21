@@ -21,7 +21,7 @@
 
         <div id="containerQuote">
 
-            <form id="quote" action="/MAC272/Project/php/quote.php" method="POST">
+            <form id="quote" action="./generate-a-quote.php" method="POST">
 
                 <h2 style="margin: 5px;">
                     Event details
