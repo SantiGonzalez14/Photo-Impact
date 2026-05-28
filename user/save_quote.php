@@ -1,85 +1,62 @@
 <?php
-require_once '../includes/db.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 
-if($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: ./Page/quote.html");
-    exit();
+include "../db.php";
 
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-//UserId
-//$userId = $_SESSION["userId"];
-$userId = 1; // Placeholder for testing, replace with actual user ID from session
+    $type_of_event = $_POST["type_of_event"];
+    $type_of_pictures = $_POST["type_of_pictures"];
+    $no_of_pics = $_POST["no_of_pics"];
+    $extra_pics = $_POST["extra_pics"];
+    $price = $_POST["price"];
+    $event_date = $_POST["event_date"];
+    $event_location = $_POST["event_location"];
+    $special_requests = $_POST["special_requests"];
 
-//DATA
-$quote_value = $_POST["price"];
+    $sql = "INSERT INTO quotes
+            (
+                type_of_event,
+                type_of_pictures,
+                no_of_pics,
+                extra_pics,
+                price,
+                event_date,
+                event_location,
+                special_requests
+            )
 
-$delivery_type = $_POST["type_of_pictures"];
+            VALUES
+            (
+                '$type_of_event',
+                '$type_of_pictures',
+                '$no_of_pics',
+                '$extra_pics',
+                '$price',
+                '$event_date',
+                '$event_location',
+                '$special_requests'
+            )";
 
-$number_of_pictures = $_POST["no_of_pics"];
-if(!empty($_POST["extra_pics"])) {
-    $number_of_pictures = $_POST["extra_pics"];
-}
+    if (mysqli_query($conn, $sql)) {
 
-$type_of_event = $_POST["type_of_event"];
+        echo "<h2>Quote Saved Successfully!</h2>";
 
-$event_date = $_POST["event_date"];
+        echo "<a href='make-a-quote.php'>Make Another Quote</a>";
 
-$event_location = $_POST["event_location"];
+    } else {
 
-$special_requests = $_POST["special_requests"] ?? "";
+        echo "Error: " . mysqli_error($conn);
 
-$quote_status = "pending";
-
-$created_at = date("Y-m-d H:i:s");
-
-$stmt = $conn->prepare(
-    "INSERT into quotes (user_id, quote_value, delivery_type, number_of_pictures, type_of_event, 
-    event_date, event_location, special_requests, quote_status) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-);
-
-$stmt->bind_param(
-    "idsisssss",
-    $userId,
-    $quote_value,
-    $delivery_type,
-    $number_of_pictures,
-    $type_of_event,
-    $event_date,
-    $event_location,
-    $special_requests,
-    $quote_status
-);
-
-$success = $stmt->execute();
-
-if($success) {
-    echo "
-    <script>
-
-        alert(
-            'Your quote has been saved. We will contact you soon.'
-        );
-
-        window.location.href = '../Page/quote.html';
-
-    </script>
-    ";
+    }
 
 } else {
-    echo "
-    <script>
 
-        alert(
-            'Error saving quote: " . $stmt->error . "'
-        );
+    header("Location: make-a-quote.php");
 
-        window.location.href = '../Page/quote.html';
-
-    </script>
-    ";
+    exit();
 }
-
 ?>

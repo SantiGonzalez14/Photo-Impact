@@ -3,7 +3,9 @@ session_start();
 
 session_unset();
 session_destroy();
-
-header("Location: Page/login.php");
-exit();
 ?>
+
+<script>
+localStorage.removeItem("loggedInUser");
+window.location.href = "/Photo-Impact/Page/login.php";
+</script>

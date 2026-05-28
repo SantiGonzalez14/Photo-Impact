@@ -66,11 +66,11 @@ if (isset($_POST["submit"])) {
         echo $emailErr . "<br>";
         echo $telephoneErr . "<br>";
         echo $passwordErr . "<br>";
-        echo "<br><a href='Page/signUp.html'>Go Back</a>";
+        echo "<br><a href='Page/signUp.php'>Go Back</a>";
     }
 } else {
 
-    header("Location: Page/signUp.html");
+    header("Location: Page/signUp.php");
     exit();
 }
 
