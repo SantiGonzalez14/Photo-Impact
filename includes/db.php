@@ -1,13 +1,17 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "photo_impact";
+require_once 'config.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(
+    DB_HOST,
+    DB_USER,
+    DB_PASS,
+    DB_NAME
+);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 echo "<script>console.log('Connected successfully');</script>";
+
+//$mysqli->select_db($dbname);

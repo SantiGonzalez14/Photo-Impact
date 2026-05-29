@@ -1,117 +1,106 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+require_once '../includes/db.php';
 session_start();
 
 if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     header("Location: ../Page/login.php");
     exit();
 }
-
-include "../db.php";
-
-$sql = "SELECT * FROM users";
-$result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Impact - Manage Users</title>
 
+    <!-- STYLES -->
+    <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/style.css">
-
+    <link rel="stylesheet" href="../style/manage-users.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            text-align: center;
-            padding-top: 80px;
-        }
-
-        .admin-box {
-            background: white;
-            width: 950px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px gray;
-        }
-
-        a {
-            display: block;
-            margin: 15px;
-            font-size: 20px;
-            text-decoration: none;
-            color: #1f1f3d;
-            font-weight: bold;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #1f1f3d;
-            color: white;
+        table.w3-table,
+        table.w3-table-all {
+            width: auto;
         }
     </style>
+    <link rel="stylesheet" href="../style/footer.css">
+
 </head>
 
-<body>
+<body class="manage-users-page">
 
-<div class="admin-box">
+    <!-- HEADER -->
+    <div id="header-container"></div>
 
-    <h1>Admin Dashboard</h1>
+    <section id="manage-users-title">
+        <h1>Manage Users</h1>
+    </section>
 
-    <p>Welcome, <?php echo $_SESSION["fname"]; ?>.</p>
+    <!-- CONTENT -->
+    <section id="content">
+        <div id="container">
 
-    <a href="manage-users.php">Manage Users</a>
-    <a href="manage-quotes.php">Manage Quotes</a>
-    <a href="manage-bookings.php">Manage Bookings</a>
-    <a href="../logout.php">Log Out</a>
+            <table class ="w3-table-all w3-card-4 w3-responsive">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Email</th>
+                        <th>Phone number</th>
+                        <th>Role</th>
+                        <th>Since</th>
+                        <th class="w3-center">Actions</th>
+                    </tr>
+                </thead>
 
-    <h2>Registered Users</h2>
+                <tbody>
+                <?php
+                //Fetch users from the database
+                $sql = "SELECT user_id, fname, lname, email, phone_number, role, DATE(created_at) as 
+                        date FROM photo_impact.users";
+                $result = mysqli_query($conn, $sql);
 
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Role</th>
-        </tr>
+                if(mysqli_num_rows($result) > 0){
+                    while($row = mysqli_fetch_assoc($result)){
+                        //Output data
+                        echo "
+                            <tr>
+                                <td>$row[user_id]</td>
+                                <td>$row[fname]</td>
+                                <td>$row[lname]</td>
+                                <td>$row[email]</td>
+                                <td>$row[phone_number]</td>
+                                <td>$row[role]</td>
+                                <td>$row[date]</td>
+                                <td>
+                                    <div class='actions-column'>
+                                        <a class='button green' href='edit-user.php?email=$row[email]'>Edit</a>"; //TODO: use id instead of email for deletion
+                                        
+                                        $isAdminRow = ($row['role'] === "admin");
+                                        if (!$isAdminRow) {
+                                            echo "<br><a class='button red' href='delete-user.php?email=$row[email]'>Delete</a></td>"; //TODO: use id instead of email for deletion
+                                        }
+                                echo"</div>
+                                </td>
+                            </tr>
+                        </tr>";
+                    }
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-        <?php
-        while ($row = mysqli_fetch_assoc($result)) {
-        ?>
-            <tr>
-                <td><?php echo $row["user_id"]; ?></td>
-                <td><?php echo $row["fname"]; ?></td>
-                <td><?php echo $row["lname"]; ?></td>
-                <td><?php echo $row["email"]; ?></td>
-                <td><?php echo $row["phone_number"]; ?></td>
-                <td><?php echo $row["role"]; ?></td>
-            </tr>
-        <?php
-        }
-        ?>
-
-    </table>
-
-</div>
-
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+    <script src="../js/loadHeader.js"></script>
+    <script src="../js/loadFooter.js"></script>
 </body>
 </html>
