@@ -1,6 +1,13 @@
 <?php
-session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require_once '../includes/db.php';
+session_start();
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+    header("Location: ../Page/login.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>

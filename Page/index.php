@@ -1,0 +1,225 @@
+<?php
+session_start();
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Impact</title>
+
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/footer.css">
+    <link rel="stylesheet" href="../style/index.css">
+
+    <style>
+
+        .welcome-message {
+            text-align: center;
+            font-size: 1.25em;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 5px solid #2c3e50;
+            max-width: 1200px;
+            font-family: Arial, sans-serif;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .logout-link {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 15px;
+            border: 1px solid #e74c3c;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+
+        .logout-link:hover {
+            background-color: #e74c3c;
+            color: #ffffff;
+        }
+
+    </style>
+
+</head>
+
+<body class="home-page">
+
+    <div id="header-container"></div>
+
+    <?php
+    if (isset($_SESSION["fname"])) {
+
+        echo "<div class='welcome-message'>";
+
+        echo "Welcome back, <strong>" .
+        htmlspecialchars($_SESSION["fname"]) .
+        "</strong>!";
+
+        echo " <a href='../logout.php' class='logout-link'>Log Out</a>";
+
+        echo "</div>";
+    }
+    ?>
+
+    <section class="intro-section">
+
+        <h1>Professional Photography</h1>
+
+        <p>
+            Welcome to <strong>Photo Impact</strong>, your trusted partner in capturing life’s most cherished moments.
+            Based in the heart of <strong>New York</strong>, we specialize in delivering high-quality photography services that turn memories into timeless art.
+        </p>
+
+        <p>
+            Led by acclaimed photographer <strong>Mauricio Gonzalez</strong>, who brings over
+            <strong>20 years of experience</strong> in covering a wide range of events,
+            our studio has proudly served clients for more than a decade with creativity,
+            professionalism, and passion.
+        </p>
+
+        <p>
+            Whether it’s a grand celebration or an intimate gathering,
+            we’re here to tell your story through powerful, authentic imagery.
+            Below, you’ll find a preview of <strong>our services</strong>.
+        </p>
+
+    </section>
+
+    <div class="grid-container">
+
+        <div class="card">
+
+            <a href="../Page/quinceanos.html">
+                <img src="../images/5.jpg"
+                     class="card-image"
+                     width="200px"
+                     height="300px"
+                     loading="lazy">
+            </a>
+
+            <h3>Quinceaños</h3>
+
+            <p>
+                A quinceañera is more than just a celebration —
+                it’s a once-in-a-lifetime moment.
+            </p>
+
+            <a href="../Page/quinceanos.html" class="card-link">
+                Learn More →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <a href="../Page/wedding.html">
+                <img src="../images/wedding.png"
+                     class="card-image"
+                     width="200px"
+                     height="300px"
+                     loading="lazy">
+            </a>
+
+            <h3>Weddings</h3>
+
+            <p>
+                Capture every magical moment of your big day.
+            </p>
+
+            <a href="../Page/wedding.html" class="card-link">
+                Learn More →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <a href="../Page/event.html">
+                <img src="../images/private-event.png"
+                     class="card-image"
+                     width="200px"
+                     height="300px"
+                     loading="lazy">
+            </a>
+
+            <h3>Private events</h3>
+
+            <p>
+                Let us turn your celebration into a beautifully documented story.
+            </p>
+
+            <a href="../Page/event.html" class="card-link">
+                Learn More →
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <a href="../Page/photoshoot.html">
+                <img src="../images/vertical-photoshoot.png"
+                     class="card-image"
+                     width="200px"
+                     height="300px"
+                     loading="lazy">
+            </a>
+
+            <h3>Photoshoots</h3>
+
+            <p>
+                Personalized indoor and outdoor photoshoots for every occasion.
+            </p>
+
+            <a href="../Page/photoshoot.html" class="card-link">
+                Learn More →
+            </a>
+
+        </div>
+
+    </div>
+
+    <section class="quote-cta">
+
+        <h2>Want to make a quote?</h2>
+
+        <p>
+            Tell us what you’re looking for and we’ll get back to you with a personalized quote.
+        </p>
+
+        <a href="../user/make-a-quote.php"
+           class="submit-button"
+           style="text-decoration: none;">
+
+           Make a Quote
+
+        </a>
+
+    </section>
+
+    <div id="footer-container"></div>
+
+    <script src="../js/loadFooter.js"></script>
+
+    <?php if (isset($_SESSION["fname"])) { ?>
+    <script>
+    localStorage.setItem("loggedInUser", JSON.stringify({
+        name: "<?php echo $_SESSION["fname"]; ?>"
+    }));
+    </script>
+    <?php } else { ?>
+    <script>
+    localStorage.removeItem("loggedInUser");
+    </script>
+    <?php } ?>
+
+    <script src="../js/loadHeader.js"></script>
+
+</body>
+</html>
