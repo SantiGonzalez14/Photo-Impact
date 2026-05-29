@@ -7,5 +7,5 @@ session_destroy();
 
 <script>
 localStorage.removeItem("loggedInUser");
-window.location.href = "/Photo-Impact/Page/login.php";
+window.location.href = "../Page/login.php";
 </script>

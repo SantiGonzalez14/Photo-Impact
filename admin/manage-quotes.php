@@ -9,7 +9,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     exit();
 }
 
-include "../db.php";
+include "../includes/db.php";
 
 /* DELETE MESSAGE */
 if (isset($_GET["delete"])) {
@@ -20,14 +20,10 @@ if (isset($_GET["delete"])) {
 
     mysqli_query($conn, $sql);
 
-    header("Location: manage-quotes.php");
+    header("Location: ./manage-quotes.php");
     exit();
 }
 
-/* GET ALL CONTACT MESSAGES */
-$sql = "SELECT * FROM contact";
-
-$result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +33,8 @@ $result = mysqli_query($conn, $sql);
     <title>Manage Quotes</title>
 
     <link rel="stylesheet" href="../style/style.css">
-
+    <link rel="stylesheet" href="../style/header.css">
+    <link rel="stylesheet" href="../style/footer.css">
     <style>
 
         body {
@@ -88,8 +85,8 @@ $result = mysqli_query($conn, $sql);
 
 <body>
 
+<div id="header-container"></div>
 <div class="quotes-box">
-
     <h1>Manage Quotes</h1>
 
     <table>
@@ -140,5 +137,9 @@ $result = mysqli_query($conn, $sql);
 
 </div>
 
+<div id="footer-container"></div>
+
+<script src="../js/loadHeader.js"></script>
+<script src="../js/loadFooter.js"></script>
 </body>
 </html>

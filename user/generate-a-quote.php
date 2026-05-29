@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 // FORM DATA
 $eventType = $_POST["type_of_event"];
+$eventTypeToDisplay = "";
 $pictureType = $_POST["type_of_pictures"];
 $numPics = $_POST["no_of_pics"];
 $eventDate = $_POST["event_date"];
@@ -13,13 +14,13 @@ $location = $_POST["event_location"];
 $specialRequests = $_POST["special_requests"] ?? "";
 
 if ($eventType === "quince") {
-    $eventType = "Quinceaños";
+    $eventTypeToDisplay = "Quinceaños";
 } elseif ($eventType === "wedding") {
-    $eventType = "Wedding";
+    $eventTypeToDisplay = "Wedding";
 } elseif ($eventType === "photoshoot") {
-    $eventType = "Photoshoot";
+    $eventTypeToDisplay = "Photoshoot";
 } elseif ($eventType === "corporate") {
-    $eventType = "Corporate Event";
+    $eventTypeToDisplay = "Corporate Event";
 }
 
 $price = 0;
@@ -99,7 +100,7 @@ else {
 
                     <li>
                         <strong>Type of event:</strong>
-                        <?php echo htmlspecialchars($eventType); ?>
+                        <?php echo htmlspecialchars($eventTypeToDisplay); ?>
                     </li>
 
                     <li>

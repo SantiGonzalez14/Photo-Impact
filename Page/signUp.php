@@ -1,6 +1,5 @@
 <?php
-require_once "../db.php";
-
+require_once "../includes/db.php";
 $nameErr = $lastNameErr = $emailErr = $telephoneErr = $passwordErr = "";
 $name = $lastName = $email = $telephone = $password = "";
 $successMsg = "";

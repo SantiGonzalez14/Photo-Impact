@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../db.php';
+require_once '../includes/db.php';
 
 $emailErr = $passwordErr = $loginErr = "";
 $email = $password = "";
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 
                 } else {
 
-                    header("Location: index.php");
+                    header("Location: ./index.php");
                     exit();
                 }
 
