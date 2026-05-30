@@ -95,6 +95,13 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
                     FROM bookings b
                     JOIN quotes q ON b.quote_id = q.quote_id
                     JOIN users u ON q.user_id = u.user_id
+                    ORDER BY
+                        CASE b.booking_status
+                            WHEN 'scheduled' THEN 1
+                            WHEN 'completed' THEN 2
+                            WHEN 'cancelled' THEN 3
+                        END,
+                        b.event_date ASC;
                 ";
 
                 $result = mysqli_query($conn, $sql);
@@ -127,14 +134,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
                                     <a
                                         class='button red'
-                                        href='reject-quote.php?booking_id=$row[booking_id]'
+                                        href='cancel-booking.php?booking_id=$row[booking_id]'
                                     >
                                         Cancel
                                     </a>
 
                                     <a
                                         class='button'
-                                        href='view-quote.php?booking_id=$row[booking_id]'
+                                        href='view-booking.php?booking_id=$row[booking_id]'
                                     >
                                         View
                                     </a>
@@ -180,10 +187,19 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
     <script>
-        // Confirmation before deleting a user
+        // Confirmation before completing a booking
         document.querySelectorAll('.button.green').forEach(button => {
             button.addEventListener('click', function(event) {
                 if (!confirm('Does the event associated with this booking actually took place? This action cannot be undone.')) {
+                    event.preventDefault();
+                }
+            });
+        });
+
+        // Confirmation before cancelling a booking
+        document.querySelectorAll('.button.red').forEach(button => {
+            button.addEventListener('click', function(event) {
+                if (!confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
                     event.preventDefault();
                 }
             });

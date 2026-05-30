@@ -207,10 +207,18 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
     <script>
-        // Confirmation before deleting a user
+        // Confirmation before approving a quote
         document.querySelectorAll('.button.green').forEach(button => {
             button.addEventListener('click', function(event) {
                 if (!confirm('Do you want to approve this quote?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+
+        document.querySelectorAll('.button.red').forEach(button => {
+            button.addEventListener('click', function(event) {
+                if (!confirm('Are you sure you want to reject this quote?')) {
                     event.preventDefault();
                 }
             });
