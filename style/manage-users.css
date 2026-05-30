@@ -80,3 +80,9 @@ td {
     text-align: center;
     border: 1px solid #ccc;
 }
+
+.button.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+}

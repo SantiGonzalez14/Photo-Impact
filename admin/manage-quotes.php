@@ -117,6 +117,15 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
                     while ($row = mysqli_fetch_assoc($result)) {
 
+                        $approveDisabled =
+                            ($row["quote_status"] !== "scheduled")
+                                ? "disabled"
+                                : "";
+
+                        $cancelDisabled =
+                            ($row["quote_status"] !== "scheduled")
+                                ? "disabled"
+                                : "";
                         echo "
 
                         <tr>
@@ -146,14 +155,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
                                 <div class='actions-column'>
 
                                     <a
-                                        class='button green'
-                                        href='approve-quote.php?quote_id=$row[quote_id]' //TODO: disable if already approved/rejected and sorted by status
+                                        class='button green $approveDisabled'
+                                        href='approve-quote.php?quote_id=$row[quote_id]'
                                     >
                                         Approve
                                     </a>
 
                                     <a
-                                        class='button red'
+                                        class='button red $cancelDisabled'
                                         href='reject-quote.php?quote_id=$row[quote_id]'
                                     >
                                         Reject

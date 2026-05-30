@@ -109,6 +109,15 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
                 if (mysqli_num_rows($result) > 0) {
 
                     while ($row = mysqli_fetch_assoc($result)) {
+                        $completeDisabled =
+                            ($row["booking_status"] !== "scheduled")
+                                ? "disabled"
+                                : "";
+
+                        $cancelDisabled =
+                            ($row["booking_status"] !== "scheduled")
+                                ? "disabled"
+                                : "";
 
                         echo "
 
@@ -126,14 +135,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
                                 <div class='actions-column'>
 
                                     <a
-                                        class='button green'
+                                        class='button green $completeDisabled'
                                         href='complete-booking.php?booking_id=$row[booking_id]' //TODO: disable if already completed/cancelled and sorted by status
                                     >
                                         Completed
                                     </a>
 
                                     <a
-                                        class='button red'
+                                        class='button red $cancelDisabled'
                                         href='cancel-booking.php?booking_id=$row[booking_id]'
                                     >
                                         Cancel
