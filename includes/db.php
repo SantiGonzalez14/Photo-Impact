@@ -12,6 +12,7 @@ $conn = new mysqli(
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "<script>console.log('Connected successfully');</script>";
 
-//$mysqli->select_db($dbname);
+if($conn){
+    echo "<script>console.log('Connected successfully');</script>";
+}

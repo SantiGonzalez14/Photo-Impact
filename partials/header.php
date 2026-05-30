@@ -26,19 +26,19 @@ session_start();
 
         <div class="dropdown-content">
 
-            <a href="../Page/quinceanos.php">
+            <a href="../Page/quinceanos.html">
                 Quinceaños
             </a>
 
-            <a href="../Page/wedding.php">
+            <a href="../Page/wedding.html">
                 Weddings
             </a>
 
-            <a href="../Page/event.php">
+            <a href="../Page/event.html">
                 Private events
             </a>
 
-            <a href="../Page/photoshoot.php">
+            <a href="../Page/photoshoot.html">
                 Photoshoot
             </a>
 
@@ -53,7 +53,7 @@ session_start();
     </li>
 
     <li>
-        <a id="about" href="../Page/about.php">
+        <a id="about" href="../Page/about.html">
             About us
         </a>
     </li>

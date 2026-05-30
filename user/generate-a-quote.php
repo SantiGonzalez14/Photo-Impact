@@ -20,7 +20,7 @@ if ($eventType === "quince") {
 } elseif ($eventType === "photoshoot") {
     $eventTypeToDisplay = "Photoshoot";
 } elseif ($eventType === "corporate") {
-    $eventTypeToDisplay = "Corporate Event";
+    $eventTypeToDisplay = "Private Event";
 }
 
 $price = 0;
