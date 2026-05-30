@@ -101,7 +101,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
                         quote_status,
                         DATE(created_at) as created_date
                     FROM quotes
-                    ORDER BY created_at DESC
+                    WHERE is_archived = 0
+                    ORDER BY
+                        CASE quote_status
+                            WHEN 'pending' THEN 1
+                            WHEN 'approved' THEN 2
+                            WHEN 'rejected' THEN 3
+                        END,
+                        created_at ASC;
                 ";
 
                 $result = mysqli_query($conn, $sql);
