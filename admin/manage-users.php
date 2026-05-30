@@ -63,7 +63,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
                 <?php
                 //Fetch users from the database
                 $sql = "SELECT user_id, fname, lname, email, phone_number, role, DATE(created_at) as 
-                        date FROM photo_impact.users";
+                        date FROM photo_impact.users WHERE is_hidden = 0 ORDER BY created_at DESC";
                 $result = mysqli_query($conn, $sql);
 
                 if(mysqli_num_rows($result) > 0){
@@ -80,11 +80,11 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
                                 <td>$row[date]</td>
                                 <td>
                                     <div class='actions-column'>
-                                        <a class='button green' href='edit-user.php?email=$row[email]'>Edit</a>"; //TODO: use id instead of email for deletion
+                                        <a class='button green' href='edit-user.php?user_id=$row[user_id]'>Edit</a>";
                                         
                                         $isAdminRow = ($row['role'] === "admin");
                                         if (!$isAdminRow) {
-                                            echo "<br><a class='button red' href='delete-user.php?email=$row[email]'>Delete</a></td>"; //TODO: use id instead of email for deletion
+                                            echo "<br><a class='button red' href='delete-user.php?user_id=$row[user_id]'>Delete</a></td>";
                                         }
                                 echo"</div>
                                 </td>
@@ -102,5 +102,15 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     <div id="footer-container"></div>
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
+    <script>
+        // Confirmation before deleting a user
+        document.querySelectorAll('.button.red').forEach(button => {
+            button.addEventListener('click', function(event) {
+                if (!confirm('Are you sure you want to delete this user?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

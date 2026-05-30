@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,21 +15,36 @@
     <link rel="stylesheet" href="../style/quote.css">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/footer.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body class="quote-page">
 
     <div id="header-container"></div>
 
-    <div id="mainContainer">
+    <div id="main-container">
 
-        <div id="containerQuote">
-
+        <div id="container-quote">
             <form id="quote" action="generate-a-quote.php" method="POST">
-
+                
                 <h2 style="margin: 5px;">
                     Event details
                 </h2>
+                <span>
+                    <?php
+                    if (isset($_SESSION["user_not_logged_in_message"])) {
+                        echo "<p class='error'>" . $_SESSION["user_not_logged_in_message"] . "</p>";
+                        unset($_SESSION["user_not_logged_in_message"]);
+                    }
+                    ?>
+                </span>
 
                 <!-- EVENT TYPE -->
                 <label for="type-of-event">
@@ -129,6 +148,8 @@
                     type="date"
                     id="event-date"
                     name="event_date"
+                    min="<?php echo date("Y-m-d"); ?>"
+                    required
                 >
                 <br>
 
@@ -141,7 +162,9 @@
                     id="event-location"
                     name="event_location"
                     placeholder="e.g. New York City"
+                    required
                 >
+                <span id="event-location-error" class="error"></span>
                 <br>
 
                  <!-- SPECIAL REQUESTS-->
@@ -178,7 +201,26 @@
     <script src="../js/script.js"></script>
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
+    <script>
+        const locationInput = document.getElementById("event-location");
+        const locationError = document.getElementById("event-location-error");
 
+        locationInput.addEventListener("input", function(event) {
+            if (locationInput.value.trim() === "") {
+                locationError.textContent = "Event location is required.";
+            } else {
+                locationError.textContent = "";
+            }
+        });
+
+        const form = document.getElementById("quote");
+        form.addEventListener("submit", function(event) {
+            if (locationInput.value.trim() === "") {
+                event.preventDefault();
+            }
+        });
+
+    </script>
 </body>
 
 </html>

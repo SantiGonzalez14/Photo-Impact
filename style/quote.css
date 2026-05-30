@@ -7,7 +7,7 @@
 
 }
 
-#mainContainer{
+#main-container{
     padding: 50px 0;
     display:flex;
     flex-grow: 1;
@@ -17,7 +17,7 @@
     gap: 50px;
   }
 
-  #containerQuote{
+  #container-quote{
     box-shadow: 0 0 10px black;
     padding: 30px;
     min-height: max-content;
@@ -29,7 +29,7 @@
     margin: 0;
   }
 
-  #containerResult{
+  #container-result{
     box-shadow: 0 0 10px black;
     padding: 15px;
     min-height: max-content;
@@ -55,16 +55,16 @@
     margin: 5px;
   }
   
-  #containerResult ul{
+  #container-result ul{
     margin:0;
     padding: 20px;
   }
-  #containerResult ul li{
+  #container-result ul li{
     margin-bottom: 10px;
   }
-  #containerResult label,
-  #containerResult select,
-  #containerResult input {
+  #container-result label,
+  #container-result select,
+  #container-result input {
     display: block;
     width: 100%;
   }

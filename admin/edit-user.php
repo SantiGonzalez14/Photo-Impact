@@ -6,18 +6,18 @@ $user_id = $fname = $lname = $email = $phone_number = "";
 $user_idErr = $fnameErr = $lnameErr = $emailErr = $phone_numberErr = "";
 
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if(!isset($_GET['email'])) {
-        die("Email is required.");
+    if(!isset($_GET['user_id'])) {
+        die("User ID is required.");
     }
-    $email = trim($_GET['email']);
+    $user_id = (int)trim($_GET['user_id']);
 
     $stmt = $conn->prepare(
         "SELECT user_id, fname, lname, email, phone_number
          FROM users
-         WHERE email = ?"
+         WHERE user_id = ?"
     );
 
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();

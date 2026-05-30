@@ -1,26 +1,13 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 session_start();
+require_once '../includes/db.php';
 
-if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+//Admin protection
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     header("Location: ../Page/login.php");
-    exit();
-}
-
-include "../includes/db.php";
-
-/* DELETE MESSAGE */
-if (isset($_GET["delete"])) {
-
-    $id = $_GET["delete"];
-
-    $sql = "DELETE FROM contact WHERE contact_id = $id";
-
-    mysqli_query($conn, $sql);
-
-    header("Location: ./manage-quotes.php");
     exit();
 }
 
@@ -28,118 +15,191 @@ if (isset($_GET["delete"])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manage Quotes</title>
 
-    <link rel="stylesheet" href="../style/style.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Photo Impact - Manage Quotes</title>
+
+    <!-- STYLES -->
     <link rel="stylesheet" href="../style/header.css">
-    <link rel="stylesheet" href="../style/footer.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/manage-users.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            text-align: center;
-            padding-top: 50px;
-        }
-
-        .quotes-box {
-            background: white;
-            width: 90%;
-            margin: auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px gray;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 12px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #1f1f3d;
-            color: white;
-        }
-
-        a {
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .delete-btn {
-            color: red;
+        table.w3-table,
+        table.w3-table-all {
+            width: auto;
         }
 
     </style>
 
+    <link rel="stylesheet" href="../style/footer.css">
+
 </head>
 
-<body>
+<body class="manage-users-page">
 
-<div id="header-container"></div>
-<div class="quotes-box">
-    <h1>Manage Quotes</h1>
+    <!-- HEADER -->
+    <div id="header-container"></div>
 
-    <table>
+    <!-- TITLE -->
+    <section id="manage-users-title">
+        <h1>Manage Quotes</h1>
+    </section>
 
-        <tr>
-            <th>Contact ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-            <th>User ID</th>
-            <th>Delete</th>
-        </tr>
+    <!-- CONTENT -->
+    <section id="content">
 
-        <?php
-        while ($row = mysqli_fetch_assoc($result)) {
-        ?>
+        <div id="container">
 
-        <tr>
+            <table class="w3-table-all w3-card-4 w3-responsive">
 
-            <td><?php echo $row["contact_id"]; ?></td>
+                <thead>
 
-            <td><?php echo $row["name"]; ?></td>
+                    <tr>
 
-            <td><?php echo $row["email"]; ?></td>
+                        <th>Quote ID</th>
+                        <th>User ID</th>
+                        <th>Event</th>
+                        <th>Delivery</th>
+                        <th>Pictures / Hours</th>
+                        <th>Price</th>
+                        <th>Event Date</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th class="w3-center">Actions</th>
 
-            <td><?php echo $row["message"]; ?></td>
+                    </tr>
 
-            <td><?php echo $row["user_id"]; ?></td>
+                </thead>
 
-            <td>
-                <a class="delete-btn"
-                   href="manage-quotes.php?delete=<?php echo $row['contact_id']; ?>">
-                   Delete
-                </a>
-            </td>
+                <tbody>
 
-        </tr>
+                <?php
 
-        <?php
-        }
-        ?>
+                // FETCH QUOTES
+                $sql = "
+                    SELECT
+                        quote_id,
+                        user_id,
+                        type_of_event,
+                        delivery_type,
+                        number_of_pictures,
+                        quote_value,
+                        event_date,
+                        event_location,
+                        quote_status,
+                        DATE(created_at) as created_date
+                    FROM quotes
+                    ORDER BY created_at DESC
+                ";
 
-    </table>
+                $result = mysqli_query($conn, $sql);
 
-    <br>
+                if (mysqli_num_rows($result) > 0) {
 
-    <a href="manage-users.php">Back to Dashboard</a>
+                    while ($row = mysqli_fetch_assoc($result)) {
 
-</div>
+                        echo "
 
-<div id="footer-container"></div>
+                        <tr>
 
-<script src="../js/loadHeader.js"></script>
-<script src="../js/loadFooter.js"></script>
+                            <td>$row[quote_id]</td>
+
+                            <td>$row[user_id]</td>
+
+                            <td>$row[type_of_event]</td>
+
+                            <td>$row[delivery_type]</td>
+
+                            <td>$row[number_of_pictures]</td>
+
+                            <td>$$row[quote_value]</td>
+
+                            <td>$row[event_date]</td>
+
+                            <td>$row[event_location]</td>
+
+                            <td>$row[quote_status]</td>
+
+                            <td>$row[created_date]</td>
+
+                            <td>
+
+                                <div class='actions-column'>
+
+                                    <a
+                                        class='button green'
+                                        href='approve-quote.php?id=$row[quote_id]'
+                                    >
+                                        Approve
+                                    </a>
+
+                                    <a
+                                        class='button red'
+                                        href='reject-quote.php?id=$row[quote_id]'
+                                    >
+                                        Reject
+                                    </a>
+
+                                    <a
+                                        class='button'
+                                        href='view-quote.php?id=$row[quote_id]'
+                                    >
+                                        View
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                        ";
+                    }
+
+                } else {
+
+                    echo "
+
+                    <tr>
+
+                        <td colspan='11' class='w3-center'>
+                            No quotes found.
+                        </td>
+
+                    </tr>
+
+                    ";
+                }
+
+                ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <div id="footer-container"></div>
+
+    <!-- SCRIPTS -->
+    <script src="../js/loadHeader.js"></script>
+    <script src="../js/loadFooter.js"></script>
+
 </body>
+
 </html>

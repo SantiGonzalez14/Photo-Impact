@@ -84,11 +84,11 @@ else {
 
     <div id="header-container"></div>
 
-    <div id="mainContainer">
+    <div id="main-container">
 
-        <div id="containerQoute">
+        <div id="container-qoute">
 
-            <div id="containerResult">
+            <div id="container-result">
 
                 <h2 style="margin: 5px;">
                     Your Quote

@@ -4,12 +4,19 @@ ini_set('display_errors', 1);
 require_once '../includes/db.php';
 
 session_start();
+$userId = $_SESSION["user_id"] ?? null;
+
 
 if($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: ./Page/quote.html");
     exit();
 }
 
+if ($userId === null) {
+    $_SESSION["user_not_logged_in_message"] = "You must be <a href='../Page/login.php'>logged in</a> to submit a quote request.";;
+    header("Location: ../user/make-a-quote.php");
+    exit();
+}
 //UserId
 $userId = $_SESSION["user_id"];
 
