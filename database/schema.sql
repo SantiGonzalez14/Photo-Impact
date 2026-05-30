@@ -59,8 +59,10 @@ CREATE TABLE bookings (
     quote_id INT UNSIGNED NOT NULL UNIQUE,
 
     booking_date DATE NOT NULL,
+    
+    event_date DATE NOT NULL,
 
-    status ENUM(
+    booking_status ENUM(
         'scheduled',
         'completed',
         'cancelled'

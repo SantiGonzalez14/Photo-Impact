@@ -140,21 +140,21 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
                                     <a
                                         class='button green'
-                                        href='approve-quote.php?id=$row[quote_id]'
+                                        href='approve-quote.php?quote_id=$row[quote_id]' //TODO: disable if already approved/rejected and sorted by status
                                     >
                                         Approve
                                     </a>
 
                                     <a
                                         class='button red'
-                                        href='reject-quote.php?id=$row[quote_id]'
+                                        href='reject-quote.php?quote_id=$row[quote_id]'
                                     >
                                         Reject
                                     </a>
 
                                     <a
                                         class='button'
-                                        href='view-quote.php?id=$row[quote_id]'
+                                        href='view-quote.php?quote_id=$row[quote_id]'
                                     >
                                         View
                                     </a>
@@ -199,6 +199,16 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     <!-- SCRIPTS -->
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
+    <script>
+        // Confirmation before deleting a user
+        document.querySelectorAll('.button.green').forEach(button => {
+            button.addEventListener('click', function(event) {
+                if (!confirm('Do you want to approve this quote?')) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 
 </body>
 

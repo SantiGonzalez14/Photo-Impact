@@ -1,7 +1,12 @@
 <?php
 
 require_once '../includes/db.php';
+session_start();
 
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+    header("Location: ../Page/login.php");
+    exit();
+}
 $user_id = $fname = $lname = $email = $phone_number = "";
 $user_idErr = $fnameErr = $lnameErr = $emailErr = $phone_numberErr = "";
 

@@ -1,6 +1,13 @@
 <?php
 require_once '../includes/db.php';
 
+session_start();
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+    header("Location: ../Page/login.php");
+    exit();
+}
+
 if (!isset($_GET['user_id'])) {
     die("User ID is required.");
 }
