@@ -100,6 +100,33 @@ session_start();
 
     <?php endif; ?>
 
+    <?php if (
+        isset($_SESSION["role"]) &&
+        $_SESSION["role"] === "user"
+    ): ?>
+
+        <!-- USER LINKS -->
+
+        <li>
+            <a
+                id="user-quotes-link"
+                href="../user/my-quotes.php"
+            >
+                My quotes
+            </a>
+        </li>
+
+        <li>
+            <a
+                id="user-bookings-link"
+                href="../user/view-user-bookings.php"
+            >
+                My bookings
+            </a>
+        </li>
+
+    <?php endif; ?>
+
     <div class="nav-auth">
 
         <?php if (isset($_SESSION["user_id"])): ?>
@@ -111,6 +138,17 @@ session_start();
                     href="../Page/logout.php"
                 >
                     Log out
+                </a>
+
+            </li>
+
+            <li>
+
+                <a
+                    class="nav-login"
+                    href="../Page/user-profile.php"
+                >
+                    My profile
                 </a>
 
             </li>
