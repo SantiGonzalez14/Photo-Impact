@@ -144,15 +144,7 @@ $userId = $_SESSION["user_id"];
 
                             <td>
 
-                                <div class='actions-column'>
-
-                                    <a
-                                        class='button'
-                                        href='view-quote.php?quote_id=$row[quote_id]'
-                                    >
-                                        View
-                                    </a>
-                        ";
+                                <div class='actions-column'>";
 
                         if (!$hasBooking) {
 
