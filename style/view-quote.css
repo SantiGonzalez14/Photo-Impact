@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+.view-quote-page {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#view-quote-title {
+    margin-top: 1rem;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.4em;
+    color: #4A4E69;
+    text-shadow: 3px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 60%;
+    margin: 3rem auto;
+    gap: 2rem;
+    font-size: 1.1em;
+}
+
+.quote-info {
+    flex: 1;
+    height: 100%;
+    padding: 20px;
+    justify-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    flex: 1;
+    height: 100%;
+    padding: 20px;
+    justify-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
