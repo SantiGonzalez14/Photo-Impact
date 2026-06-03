@@ -42,6 +42,32 @@ $quote_status = "pending";
 
 $created_at = date("Y-m-d H:i:s");
 
+//Check if the event date does not conflict with existing bookings that are scheduled for the same date
+$stmt = $conn->prepare(
+    "SELECT booking_id
+     FROM bookings
+     WHERE event_date = ? AND booking_status = 'scheduled'"
+);
+
+$stmt->bind_param("s", $event_date);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    echo "
+    <script>
+
+        alert(
+            'The event date you selected is not available. Please choose another date.'
+        );
+
+        window.location.href = '../user/make-a-quote.php';
+
+    </script>
+    ";
+    exit();
+}
+
 $stmt = $conn->prepare(
     "INSERT into quotes (user_id, quote_value, delivery_type, number_of_pictures, type_of_event, 
     event_date, event_location, special_requests, quote_status) 
