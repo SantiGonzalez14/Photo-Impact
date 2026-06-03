@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
 }
-.view-quote-page {
+.view-data-page {
     margin: 0;
     height: 100%;
     display: flex;
@@ -10,7 +10,7 @@
     font-family: 'Trebuchet MS', sans-serif;
 }
 
-#view-quote-title {
+#view-data-title {
     margin-top: 1rem;
     text-align: center;
     padding: 10px;
@@ -29,7 +29,7 @@
     font-size: 1.1em;
 }
 
-.quote-info {
+.data-info {
     flex: 1;
     height: 100%;
     padding: 20px;
