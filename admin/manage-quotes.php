@@ -117,13 +117,14 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
                     while ($row = mysqli_fetch_assoc($result)) {
 
+                        // Disable approve/reject buttons if quote is not pending
                         $approveDisabled =
-                            ($row["quote_status"] !== "scheduled")
+                            ($row["quote_status"] !== "pending")
                                 ? "disabled"
                                 : "";
 
                         $cancelDisabled =
-                            ($row["quote_status"] !== "scheduled")
+                            ($row["quote_status"] !== "pending")
                                 ? "disabled"
                                 : "";
                         echo "
