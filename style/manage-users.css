@@ -103,3 +103,14 @@ td {
     color: #4A4E69;
     padding: 5px 10px;
 }
+
+.table-container {
+  max-height: 556px; /* Adjust height to match roughly 10 rows */
+  overflow-y: auto;  /* Adds a vertical scrollbar when needed */
+}
+
+table th {
+  position: sticky;
+  top: 0;
+  background-color: #fff; 
+}

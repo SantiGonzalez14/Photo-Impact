@@ -41,6 +41,7 @@ function displayQuotesTableWithStatus($conn, $status) {
     }
 
     echo '
+    <div class="table-container">
     <table class="w3-table-all w3-card-4 w3-responsive">
 
         <thead>
@@ -138,6 +139,7 @@ function displayQuotesTableWithStatus($conn, $status) {
     echo '
         </tbody>
     </table>
+    </div>
     ';
 }
 

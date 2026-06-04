@@ -37,7 +37,9 @@ function displayBookingsTableWithStatus($conn, $status){
         die("Error fetching bookings: " . $e->getMessage());
     }
 
-    echo '<table class="w3-table-all w3-card-4 w3-responsive">
+    echo '
+    <div class="table-container">
+    <table class="w3-table-all w3-card-4 w3-responsive">
 
         <thead>
 
@@ -132,7 +134,8 @@ function displayBookingsTableWithStatus($conn, $status){
         echo '
         </tbody>
 
-    </table>';
+    </table>
+    </div>';
 
 }
 ?>
