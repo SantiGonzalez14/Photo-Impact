@@ -111,7 +111,8 @@ CREATE TABLE booking_reschedule_requests (
     request_status ENUM(
         'pending',
         'approved',
-        'rejected'
+        'rejected',
+        'cancelled'
     ) DEFAULT 'pending',
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
