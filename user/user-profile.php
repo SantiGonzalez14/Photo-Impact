@@ -31,19 +31,54 @@ $successMessage = "";
 
 if (isset($_POST["delete_account"])) {
 
-    $stmt = $conn->prepare(
-        "UPDATE users
-         SET is_hidden = 1
-         WHERE user_id = ?"
-    );
+    try {
+        $checkBookings = $conn->prepare(
+            "SELECT b.booking_id
+                FROM bookings b
+                JOIN quotes q
+                ON q.quote_id = b.quote_id
+                JOIN users u
+                ON u.user_id = q.user_id
+                WHERE u.user_id = ?
+                AND b.booking_status = 'scheduled';
+            "
+        );
+        $checkBookings->bind_param("i", $user_id);
+        $checkBookings->execute();
+        $result = $checkBookings->get_result();
 
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
+        if($result->num_rows > 0){
+            echo "
+            <script>
+                alert('You have active bookings. Please contact an administrator to close your account.');
+                window.location.href = '../user/user-profile.php';
+            </script>";
+            
+            $checkBookings->close();
+            exit();
+        }
 
-    session_destroy();
+        $stmt = $conn->prepare(
+            "UPDATE users
+                SET is_hidden = 1
+                WHERE user_id = ?;"
+        );
+        
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $stmt->close();
+        echo "
+            <script>
+                alert('Your account has been successfully deleted.');
+            </script>";
+        session_destroy();
+        
+        header("Location: ../Page/login.php");
+        exit();
+    } catch (Exception $e){
+        die("Error while deleting account: " . $e->getMessage());
+    }
 
-    header("Location: ../Page/login.php");
-    exit();
 }
 
 /*

@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 
         $safe_email = mysqli_real_escape_string($conn, $email);
 
-        $sql = "SELECT * FROM users WHERE email='$safe_email'";
+        $sql = "SELECT * FROM users WHERE email='$safe_email' AND is_hidden=0";
 
         $result = mysqli_query($conn, $sql);
 
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 
         } else {
 
-            $loginErr = "Invalid email or password combination";
+            $loginErr = "No user is registered with the email provided";
         }
     }
 }
