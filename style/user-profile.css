@@ -1,0 +1,77 @@
+.user-profile-page {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#profile-title {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-items: center;
+}
+
+.form-container {
+    width: 40%;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    background-color: #22223b;
+    color: #f2e9e4;
+    border-radius: 5px 5px 0 0;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    padding-top: 0;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.input-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+.button.red {
+    color: white;
+    background-color: #e74c3c;
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

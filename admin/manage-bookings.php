@@ -201,8 +201,6 @@ function displayBookingsTableWithStatus($conn, $status){
             $status = $_GET['status'] ?? 'scheduled';
             displayBookingsTableWithStatus($conn, $status);
             ?>
-
-
         </div>
 
     </section>

@@ -13,6 +13,153 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 
 $errorMessage = $_SESSION["reschedule_error"] ?? "";
 unset($_SESSION["reschedule_error"]);
+
+function displayRescheduleRequestsWithStatus($conn, $status)
+{
+    $stmt = $conn->prepare(
+        "SELECT
+            r.request_id,
+            r.booking_id,
+            r.current_event_date,
+            r.requested_event_date,
+            r.reschedule_reason,
+            r.request_status,
+
+            u.fname,
+            u.lname
+
+        FROM booking_reschedule_requests r
+
+        JOIN bookings b
+            ON r.booking_id = b.booking_id
+
+        JOIN quotes q
+            ON b.quote_id = q.quote_id
+
+        JOIN users u
+            ON q.user_id = u.user_id
+
+        WHERE r.request_status = ?
+
+        ORDER BY r.created_at ASC"
+    );
+
+    $stmt->bind_param("s", $status);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    echo '
+    <div class="table-container">
+    <table class="w3-table-all w3-card-4 w3-responsive">
+
+        <thead>
+
+            <tr>
+
+                <th>Request</th>
+                <th>Booking ID</th>
+                <th>Client</th>
+                <th>Current Date</th>
+                <th>Requested Date</th>
+                <th>Status</th>
+                <th>Reason</th>
+                <th class="w3-center">Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+    ';
+
+    if ($result->num_rows > 0) {
+
+        while ($row = $result->fetch_assoc()) {
+
+            echo "
+
+            <tr>
+
+                <td>{$row['request_id']}</td>
+
+                <td>{$row['booking_id']}</td>
+
+                <td>
+                    {$row['fname']}
+                    {$row['lname']}
+                </td>
+
+                <td>{$row['current_event_date']}</td>
+
+                <td>{$row['requested_event_date']}</td>
+
+                <td>{$row['request_status']}</td>
+
+                <td>{$row['reschedule_reason']}</td>
+
+                <td>
+
+                    <div class='actions-column'>
+            ";
+
+            if ($status === "pending") {
+
+                echo "
+
+                    <a
+                        class='button green'
+                        href='approve-reschedule.php
+                            ?request_id={$row['request_id']}
+                            &requested_event_date={$row['requested_event_date']}'
+                    >
+                        Approve
+                    </a>
+
+                    <a
+                        class='button red'
+                        href='reject-reschedule.php
+                            ?request_id={$row['request_id']}'
+                    >
+                        Reject
+                    </a>
+                ";
+            }
+
+            echo "
+
+                    </div>
+
+                </td>
+
+            </tr>
+            ";
+        }
+
+    } else {
+
+        echo "
+
+        <tr>
+
+            <td colspan='8' class='w3-center'>
+                No {$status} reschedule requests found.
+            </td>
+
+        </tr>
+
+        ";
+    }
+
+    echo '
+
+        </tbody>
+
+    </table>
+    </div>
+    ';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -72,143 +219,26 @@ unset($_SESSION["reschedule_error"]);
 
         <div id="container">
 
-            <?php if (!empty($errorMessage)): ?>
+            <div class="filter-links">
 
-                    <div class="error-box">
-                        <?php echo htmlspecialchars($errorMessage); ?>
-                    </div>
+                <p>Filter by status:</p>
 
-            <?php endif; ?>
+                <a href="?status=pending">Pending</a>
+                <a href="?status=approved">Approved</a>
+                <a href="?status=rejected">Rejected</a>
+                <a href="?status=cancelled">Cancelled</a>
 
-            <table class="w3-table-all w3-card-4 w3-responsive">
+            </div>
 
-                <thead>
+            <?php
+            $status = $_GET['status'] ?? 'pending';
+            if (!empty($errorMessage)) {
+                echo "<div class='error-box'>" . htmlspecialchars($errorMessage) . "</div>";
+            }
+            displayRescheduleRequestsWithStatus($conn, $status);
+            ?>
 
-                    <tr>
-
-                        <th>Request</th>
-                        <th>Booking ID</th>
-                        <th>Client</th>
-                        <th>Current date</th>
-                        <th>Requested date</th>
-                        <th>Request status</th>
-                        <th>Reason</th>
-                        <th class="w3-center">Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                <?php
-
-                // FETCH RESCHEDULE REQUESTS
-                $sql = "
-                    SELECT
-                        r.request_id,
-                        r.booking_id,
-                        r.current_event_date,
-                        r.requested_event_date,
-                        r.reschedule_reason,
-                        r.request_status,
-
-                        u.fname,
-                        u.lname
-
-                    FROM booking_reschedule_requests r
-
-                    JOIN bookings b
-                        ON r.booking_id = b.booking_id
-
-                    JOIN quotes q
-                        ON b.quote_id = q.quote_id
-
-                    JOIN users u
-                        ON q.user_id = u.user_id
-
-                    WHERE r.request_status = 'pending'
-
-                    ORDER BY r.created_at ASC
-                ";
-
-                $result = mysqli_query($conn, $sql);
-
-                if (mysqli_num_rows($result) > 0) {
-
-                    while ($row = mysqli_fetch_assoc($result)) {
-
-                        // Disable approve/reject buttons if quote is not pending
-                        $approveDisabled =
-                            ($row["request_status"] !== "pending")
-                                ? "disabled"
-                                : "";
-
-                        $cancelDisabled =
-                            ($row["request_status"] !== "pending")
-                                ? "disabled"
-                                : "";
-                        echo "
-
-                        <tr>
-
-                            <td>$row[request_id]</td>
-                            <td>$row[booking_id]</td>
-                            <td>$row[fname] $row[lname]</td>
-                            <td>$row[current_event_date]</td>
-                            <td>$row[requested_event_date]</td>
-                            <td>$row[request_status]</td>
-                            <td>$row[reschedule_reason]</td>
-
-
-                            <td>
-
-                                <div class='actions-column'>
-
-                                    <a
-                                        class='button green $approveDisabled'
-                                        href='approve-reschedule.php?request_id=$row[request_id]&requested_event_date=$row[requested_event_date]'
-                                    >
-                                        Approve
-                                    </a>
-
-                                    <a
-                                        class='button red $cancelDisabled'
-                                        href='reject-reschedule.php?request_id=$row[request_id]'
-                                    >
-                                        Reject
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        ";
-                    }
-
-                } else {
-
-                    echo "
-
-                    <tr>
-
-                        <td colspan='11' class='w3-center'>
-                            No reschedule requests found.
-                        </td>
-
-                    </tr>
-
-                    ";
-                }
-
-                ?>
-
-                </tbody>
-
-            </table>
-
+            
         </div>
 
     </section>

@@ -155,7 +155,7 @@ session_start();
 
                 <a
                     class="nav-login"
-                    href="../Page/user-profile.php"
+                    href="../user/user-profile.php"
                 >
                     My profile
                 </a>

@@ -44,7 +44,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
     <!-- CONTENT -->
     <section id="content">
         <div id="container">
-
+            <div class="table-container">
             <table class ="w3-table-all w3-card-4 w3-responsive">
                 <thead>
                     <tr>
@@ -95,6 +95,7 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
                 ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </section>
 
