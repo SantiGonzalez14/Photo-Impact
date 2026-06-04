@@ -109,3 +109,16 @@ li a:active{
 .text-input{
     padding: 5px;
 }
+
+.admin-links {
+    background-color: #264653;
+}
+
+.admin-links:hover {
+    background-color: #2A9D8F;
+}
+
+.admin-links:active,
+.admin-links.active {
+    background-color: #9A8C98;
+}

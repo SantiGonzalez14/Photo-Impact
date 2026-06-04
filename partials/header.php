@@ -58,6 +58,12 @@ session_start();
         </a>
     </li>
 
+    <li>
+        <a id="review" href="../Page/review-us.php">
+            Review us
+        </a>
+    </li>
+
     <?php if (
         isset($_SESSION["role"]) &&
         $_SESSION["role"] === "admin"
@@ -69,6 +75,7 @@ session_start();
             <a
                 id="manage-user-link"
                 href="../admin/manage-users.php"
+                class="admin-links"
             >
                 Users
             </a>
@@ -78,6 +85,7 @@ session_start();
             <a
                 id="manage-quotes-link"
                 href="../admin/manage-quotes.php"
+                class="admin-links"
             >
                 Quotes
             </a>
@@ -87,6 +95,7 @@ session_start();
             <a
                 id="manage-bookings-link"
                 href="../admin/manage-bookings.php"
+                class="admin-links"
             >
                 Bookings
             </a>
@@ -96,8 +105,19 @@ session_start();
             <a
                 id="manage-reschedule-requests-link"
                 href="../admin/manage-reschedule-requests.php"
+                class="admin-links"
             >
                 Reschedule Requests
+            </a>
+        </li>
+
+        <li>
+            <a
+                id="manage-reviews--link"
+                href="../admin/manage-reviews.php"
+                class="admin-links"
+            >
+                Reviews
             </a>
         </li>
 
