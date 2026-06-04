@@ -11,30 +11,34 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     exit();
 }
 
-function displayQuotesTable($conn, $status) {
+function displayQuotesTableWithStatus($conn, $status) {
 
-    $stmt = $conn->prepare(
-        "SELECT
-            quote_id,
-            user_id,
-            type_of_event,
-            delivery_type,
-            number_of_pictures,
-            quote_value,
-            event_date,
-            event_location,
-            quote_status,
-            DATE(created_at) AS created_date
-         FROM quotes
-         WHERE is_archived = 0
-         AND quote_status = ?
-         ORDER BY created_at ASC"
-    );
-
-    $stmt->bind_param("s", $status);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
+    try{
+        $stmt = $conn->prepare(
+            "SELECT
+                quote_id,
+                user_id,
+                type_of_event,
+                delivery_type,
+                number_of_pictures,
+                quote_value,
+                event_date,
+                event_location,
+                quote_status,
+                DATE(created_at) AS created_date
+             FROM quotes
+             WHERE is_archived = 0
+             AND quote_status = ?
+             ORDER BY event_date ASC"
+        );
+    
+        $stmt->bind_param("s", $status);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+    } catch (Exception $e) {
+        die("Error fetching quotes: " . $e->getMessage());
+    }
 
     echo '
     <table class="w3-table-all w3-card-4 w3-responsive">
@@ -189,7 +193,7 @@ function displayQuotesTable($conn, $status) {
             <div class="filter-links">
 
                 <p>Filter by status:</p>
-                
+
                 <a href="?status=pending">Pending</a>
                 <a href="?status=approved">Approved</a>
                 <a href="?status=rejected">Rejected</a>
@@ -198,7 +202,7 @@ function displayQuotesTable($conn, $status) {
 
             <?php
             $status = $_GET['status'] ?? 'pending';
-            displayQuotesTable($conn, $status);
+            displayQuotesTableWithStatus($conn, $status);
             ?>
 
         </div>
