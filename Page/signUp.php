@@ -121,7 +121,6 @@ if (isset($_POST["submit"])) {
             <?php
             if ($successMsg != "") {
                 echo "<p class='success'>$successMsg</p>";
-                echo "<p style='text-align:center;'><a href='../Page/login.php'>Go to Login</a></p>";
             }
             ?>
 

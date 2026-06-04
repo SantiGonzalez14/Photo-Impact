@@ -58,12 +58,6 @@ session_start();
         </a>
     </li>
 
-    <li>
-        <a id="contact" href="../Page/contactUs.php">
-            Contact us
-        </a>
-    </li>
-
     <?php if (
         isset($_SESSION["role"]) &&
         $_SESSION["role"] === "admin"

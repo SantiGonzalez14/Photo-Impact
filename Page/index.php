@@ -61,9 +61,6 @@ session_start();
         echo "Welcome back, <strong>" .
         htmlspecialchars($_SESSION["fname"]) .
         "</strong>!";
-
-        echo " <a href='../logout.php' class='logout-link'>Log Out</a>";
-
         echo "</div>";
     }
     ?>

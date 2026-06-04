@@ -25,6 +25,8 @@
   margin-top: 10px;
 }
 .main-title h1{
+    font-family:  'Impact', 'Arial Black', sans-serif;
+    font-size: 2em;
     margin-top: 0;
 }
 ul.topnav {

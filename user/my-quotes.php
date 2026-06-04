@@ -29,10 +29,10 @@ $userId = $_SESSION["user_id"];
     <title>Photo Impact - My Quotes</title>
 
     <!-- STYLES -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/manage-users.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <style>
 
