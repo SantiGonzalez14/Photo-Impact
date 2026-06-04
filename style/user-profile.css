@@ -76,6 +76,11 @@
     margin-bottom: 10px;
 }
 
+.success {
+    color:green; 
+    margin: 0px 10px;
+}
+
 .password-container input {
     padding-right: 30px; /* Space for the icons */
     width: 100%;

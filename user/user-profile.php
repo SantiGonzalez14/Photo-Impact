@@ -20,7 +20,7 @@ $lnameErr = "";
 $emailErr = "";
 $phoneErr = "";
 
-$passwordErr = "";
+$passwordErr = $passwordChangeSuccessful = "";
 $successMessage = "";
 
 /*
@@ -171,59 +171,64 @@ if (
     $confirmPassword =
         $_POST["confirm_password"];
 
-    $stmt = $conn->prepare(
-        "SELECT password
-         FROM users
-         WHERE user_id = ?"
-    );
-
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-
-    if (
-        !password_verify(
-            $currentPassword,
-            $user["password"]
-        )
-    ) {
-
-        $passwordErr =
-            "Current password is incorrect.";
-
-    } elseif (
-        $newPassword !== $confirmPassword
-    ) {
-
-        $passwordErr =
-            "Passwords do not match.";
-
-    } else {
-
-        $hashedPassword =
-            password_hash(
-                $newPassword,
-                PASSWORD_DEFAULT
-            );
-
+    try{
         $stmt = $conn->prepare(
-            "UPDATE users
-             SET password = ?
+            "SELECT password_hash
+             FROM users
              WHERE user_id = ?"
         );
-
-        $stmt->bind_param(
-            "si",
-            $hashedPassword,
-            $user_id
-        );
-
+    
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
+    
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+    
+        if (
+            !password_verify(
+                $currentPassword,
+                $user["password_hash"]
+            )
+        ) {
+    
+            $passwordErr =
+                "Current password is incorrect.";
+    
+        } elseif (
+            $newPassword !== $confirmPassword
+        ) {
+    
+            $passwordErr =
+                "Passwords do not match.";
+    
+        } else {
+    
+            $hashedPassword =
+                password_hash(
+                    $newPassword,
+                    PASSWORD_DEFAULT
+                );
+    
+            $stmt = $conn->prepare(
+                "UPDATE users
+                 SET password_hash = ?
+                 WHERE user_id = ?"
+            );
+    
+            $stmt->bind_param(
+                "si",
+                $hashedPassword,
+                $user_id
+            );
+    
+            $stmt->execute();
 
-        $successMessage =
-            "Password updated successfully.";
+    
+            $passwordChangeSuccessful =
+                "Password updated successfully.";
+        }
+    } catch (Exception $e){
+        die("Error changing the password: " . $e->getMessage());
     }
 }
 ?>
@@ -242,7 +247,6 @@ if (
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-/>
 
 </head>
 <body class="user-profile-page">
@@ -315,9 +319,16 @@ if (
         </div>
 
         <div class="form-container">
+
             <div class="form-header">
                 <h2>Change Password</h2>
             </div>
+
+            <?php if($passwordChangeSuccessful): ?>
+            <p class="success">
+                <?= $passwordChangeSuccessful ?>
+            </p>
+            <?php endif; ?>
 
             <form method="POST" class="input-group">
 
