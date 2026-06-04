@@ -90,6 +90,14 @@
   border-bottom: 2px solid #ccc;
 }
 
+.review-section {
+  background-color: #f7f7f7;
+  text-align: center;
+  padding: 50px 20px;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+}
+
 .quote-cta h2 {
   font-size: 2rem;
   margin-bottom: 15px;

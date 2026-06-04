@@ -200,6 +200,24 @@ session_start();
 
     </section>
 
+    <section class="review-section">
+
+        <h2>Leave us a review!</h2>
+
+        <p>
+            Tell us what do you think about Photo Impact.
+        </p>
+
+        <a href="../Page/review-us.php"
+           class="submit-button"
+           style="text-decoration: none;">
+
+           Review us
+
+        </a>
+
+    </section>
+
     <div id="footer-container"></div>
 
     <script src="../js/loadFooter.js"></script>
