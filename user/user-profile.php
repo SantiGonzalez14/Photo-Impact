@@ -239,7 +239,10 @@ if (
     <link rel="stylesheet" href="../style/footer.css">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/user-profile.css">
-
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+/>
 
 </head>
 <body class="user-profile-page">
@@ -319,22 +322,46 @@ if (
             <form method="POST" class="input-group">
 
                 <label>Current Password</label>
-                <input
-                    type="password"
-                    name="current_password"
-                    required>
+                <div class="password-container">
+                    <div class="icons">
+                        <i class="fa-regular fa-eye toggle-password"></i>
+                    </div>
+                    <input
+                        type="password"
+                        placeholder="Enter current password"
+                        name="current_password"
+                        class="pass"
+                        required>
+                    </div>
 
                 <label>New Password</label>
-                <input
-                    type="password"
-                    name="new_password"
-                    required>
+
+                <div class="password-container">
+                    <div class="icons">
+                        <i class="fa-regular fa-eye toggle-password"></i>
+                    </div>
+
+                    <input
+                        type="password"
+                        placeholder="Enter new password"
+                        name="new_password"
+                        class="pass"
+                        required>
+                </div>
 
                 <label>Confirm Password</label>
-                <input
-                    type="password"
-                    name="confirm_password"
-                    required>
+                <div class="password-container">
+                    <div class="icons">
+                        <i class="fa-regular fa-eye toggle-password"></i>
+                    </div>
+
+                    <input
+                        type="password"
+                        placeholder="Re-enter new password"
+                        name="confirm_password"
+                        class="pass"
+                        required>
+                </div>
 
                 <span class="error">
                     <?= $passwordErr ?>
@@ -381,5 +408,28 @@ if (
 
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
+
+    <script>
+        document.querySelectorAll(".toggle-password").forEach(icon => {
+
+            icon.addEventListener("click", () => {
+
+                const passwordInput =
+                    icon.parentElement.parentElement.querySelector(".pass");
+
+                if (passwordInput.type === "password") {
+
+                    passwordInput.type = "text";
+                    icon.classList.replace("fa-eye", "fa-eye-slash");
+
+                } else {
+
+                    passwordInput.type = "password";
+                    icon.classList.replace("fa-eye-slash", "fa-eye");
+                }
+            });
+
+        });
+    </script>
 </body>
 </html>

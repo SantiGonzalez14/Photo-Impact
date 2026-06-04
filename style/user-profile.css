@@ -75,3 +75,23 @@
     margin-top: 5px;
     margin-bottom: 10px;
 }
+
+.password-container input {
+    padding-right: 30px; /* Space for the icons */
+    width: 100%;
+}
+.password-container .icons {
+    position: relative;
+    right: 10px;
+}
+
+.password-container .icons i {
+    position: absolute;
+    cursor: pointer;
+    color: #888;
+    font-size: 1.1rem;
+    width: 20px;
+    height: 20px;
+    right: -3px;
+    bottom: -32px
+}
