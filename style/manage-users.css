@@ -86,3 +86,20 @@ td {
     pointer-events: none;
     cursor: not-allowed;
 }
+
+.filter-links {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-size: 1.5em;
+}
+
+.filter-links a {
+    text-decoration: none;
+    color: #4A4E69;
+    padding: 5px 10px;
+}

@@ -11,6 +11,132 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     exit();
 }
 
+function displayQuotesTable($conn, $status) {
+
+    $stmt = $conn->prepare(
+        "SELECT
+            quote_id,
+            user_id,
+            type_of_event,
+            delivery_type,
+            number_of_pictures,
+            quote_value,
+            event_date,
+            event_location,
+            quote_status,
+            DATE(created_at) AS created_date
+         FROM quotes
+         WHERE is_archived = 0
+         AND quote_status = ?
+         ORDER BY created_at ASC"
+    );
+
+    $stmt->bind_param("s", $status);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    echo '
+    <table class="w3-table-all w3-card-4 w3-responsive">
+
+        <thead>
+
+            <tr>
+                <th>Quote ID</th>
+                <th>User ID</th>
+                <th>Event</th>
+                <th>Delivery</th>
+                <th>Pictures / Hours</th>
+                <th>Price</th>
+                <th>Event Date</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th class="w3-center">Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+    ';
+
+    if ($result->num_rows > 0) {
+
+        while ($row = $result->fetch_assoc()) {
+
+            echo "
+
+            <tr>
+
+                <td>{$row['quote_id']}</td>
+                <td>{$row['user_id']}</td>
+                <td>{$row['type_of_event']}</td>
+                <td>{$row['delivery_type']}</td>
+                <td>{$row['number_of_pictures']}</td>
+                <td>$" . number_format($row['quote_value'], 2) . "</td>
+                <td>{$row['event_date']}</td>
+                <td>{$row['event_location']}</td>
+                <td>{$row['quote_status']}</td>
+                <td>{$row['created_date']}</td>
+
+                <td>
+
+                    <div class='actions-column'>";
+
+            if ($status === "pending") {
+
+                echo "
+
+                        <a
+                            class='button green'
+                            href='approve-quote.php?quote_id={$row['quote_id']}'
+                        >
+                            Approve
+                        </a>
+
+                        <a
+                            class='button red'
+                            href='reject-quote.php?quote_id={$row['quote_id']}'
+                        >
+                            Reject
+                        </a>
+                ";
+            }
+
+            echo "
+
+                        <a
+                            class='button'
+                            href='view-quote.php?quote_id={$row['quote_id']}'
+                        >
+                            View
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+            ";
+        }
+
+    } else {
+
+        echo "
+        <tr>
+            <td colspan='11' class='w3-center'>
+                No {$status} quotes found.
+            </td>
+        </tr>
+        ";
+    }
+
+    echo '
+        </tbody>
+    </table>
+    ';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -60,151 +186,20 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     <section id="content">
 
         <div id="container">
+            <div class="filter-links">
 
-            <table class="w3-table-all w3-card-4 w3-responsive">
+                <p>Filter by status:</p>
+                
+                <a href="?status=pending">Pending</a>
+                <a href="?status=approved">Approved</a>
+                <a href="?status=rejected">Rejected</a>
 
-                <thead>
+            </div>
 
-                    <tr>
-
-                        <th>Quote ID</th>
-                        <th>User ID</th>
-                        <th>Event</th>
-                        <th>Delivery</th>
-                        <th>Pictures / Hours</th>
-                        <th>Price</th>
-                        <th>Event Date</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th class="w3-center">Actions</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                <?php
-
-                // FETCH QUOTES
-                $sql = "
-                    SELECT
-                        quote_id,
-                        user_id,
-                        type_of_event,
-                        delivery_type,
-                        number_of_pictures,
-                        quote_value,
-                        event_date,
-                        event_location,
-                        quote_status,
-                        DATE(created_at) as created_date
-                    FROM quotes
-                    WHERE is_archived = 0
-                    ORDER BY
-                        CASE quote_status
-                            WHEN 'pending' THEN 1
-                            WHEN 'approved' THEN 2
-                            WHEN 'rejected' THEN 3
-                        END,
-                        created_at ASC;
-                ";
-
-                $result = mysqli_query($conn, $sql);
-
-                if (mysqli_num_rows($result) > 0) {
-
-                    while ($row = mysqli_fetch_assoc($result)) {
-
-                        // Disable approve/reject buttons if quote is not pending
-                        $approveDisabled =
-                            ($row["quote_status"] !== "pending")
-                                ? "disabled"
-                                : "";
-
-                        $cancelDisabled =
-                            ($row["quote_status"] !== "pending")
-                                ? "disabled"
-                                : "";
-                        echo "
-
-                        <tr>
-
-                            <td>$row[quote_id]</td>
-
-                            <td>$row[user_id]</td>
-
-                            <td>$row[type_of_event]</td>
-
-                            <td>$row[delivery_type]</td>
-
-                            <td>$row[number_of_pictures]</td>
-
-                            <td>$$row[quote_value]</td>
-
-                            <td>$row[event_date]</td>
-
-                            <td>$row[event_location]</td>
-
-                            <td>$row[quote_status]</td>
-
-                            <td>$row[created_date]</td>
-
-                            <td>
-
-                                <div class='actions-column'>
-
-                                    <a
-                                        class='button green $approveDisabled'
-                                        href='approve-quote.php?quote_id=$row[quote_id]'
-                                    >
-                                        Approve
-                                    </a>
-
-                                    <a
-                                        class='button red $cancelDisabled'
-                                        href='reject-quote.php?quote_id=$row[quote_id]'
-                                    >
-                                        Reject
-                                    </a>
-
-                                    <a
-                                        class='button'
-                                        href='view-quote.php?quote_id=$row[quote_id]'
-                                    >
-                                        View
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        ";
-                    }
-
-                } else {
-
-                    echo "
-
-                    <tr>
-
-                        <td colspan='11' class='w3-center'>
-                            No quotes found.
-                        </td>
-
-                    </tr>
-
-                    ";
-                }
-
-                ?>
-
-                </tbody>
-
-            </table>
+            <?php
+            $status = $_GET['status'] ?? 'pending';
+            displayQuotesTable($conn, $status);
+            ?>
 
         </div>
 
