@@ -97,3 +97,26 @@ CREATE TABLE contact (
         REFERENCES users(user_id)
 
 );
+
+CREATE TABLE booking_reschedule_requests (
+    request_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+
+    booking_id INT UNSIGNED NOT NULL,
+
+    current_event_date DATE NOT NULL,
+    requested_event_date DATE NOT NULL,
+
+    reschedule_reason TEXT,
+
+    request_status ENUM(
+        'pending',
+        'approved',
+        'rejected'
+    ) DEFAULT 'pending',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_booking_id
+            FOREIGN KEY (booking_id)
+            REFERENCES bookings(booking_id)
+);

@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     $quote_id = (int) $_POST["quote_id"];
 
-    $quote_value = $_SESSION["new_quote_price"] ?? $quote["quote_value"]; // Get the new price calculated in calculate-edited-quote.php, default to 0 if not set
+    $quote_value = $_SESSION["new_quote_price"] ?? 0; // Get the new price calculated in calculate-edited-quote.php, default to 0 if not set
     $type_of_event = trim($_POST["type_of_event"]);
     $delivery_type = trim($_POST["type_of_pictures"]);
     $number_of_pictures = (int) $_POST["no_of_pics"];

@@ -98,6 +98,15 @@ session_start();
             </a>
         </li>
 
+        <li>
+            <a
+                id="manage-reschedule-requests-link"
+                href="../admin/manage-reschedule-requests.php"
+            >
+                Reschedule Requests
+            </a>
+        </li>
+
     <?php endif; ?>
 
     <?php if (
@@ -119,7 +128,7 @@ session_start();
         <li>
             <a
                 id="user-bookings-link"
-                href="../user/view-user-bookings.php"
+                href="../user/my-bookings.php"
             >
                 My bookings
             </a>

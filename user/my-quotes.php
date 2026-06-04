@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
+$admin_email = "admin@photoimpact.com";
 session_start();
 require_once '../includes/db.php';
 
@@ -43,10 +43,8 @@ $userId = $_SESSION["user_id"];
 
         .button.disabled {
             opacity: 0.5;
-            pointer-events: none;
-            cursor: not-allowed;
         }
-
+        
     </style>
 
     <link rel="stylesheet" href="../style/footer.css">
@@ -162,13 +160,12 @@ $userId = $_SESSION["user_id"];
                         } else {
 
                             echo "
-
-                                    <span
-                                        class='button disabled'
-                                        title='This quote is already associated with a booking.'
+                                    <a
+                                        style='text-decoration: none;'
+                                        href='mailto: $admin_email?subject=Question about Quote ID $row[quote_id]'
                                     >
                                         Contact Admin
-                                    </span>
+                                    </a>
 
                             ";
                         }

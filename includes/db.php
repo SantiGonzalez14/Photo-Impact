@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config.php';
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $conn = new mysqli(
     DB_HOST,
