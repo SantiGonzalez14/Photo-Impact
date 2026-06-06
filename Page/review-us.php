@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 session_start();
+$word_count_msg = $_SESSION["word_count_msg"] ?? "";
+unset($_SESSION["word_count_msg"]);
 
 include "../includes/db.php";
 
@@ -12,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $rating = $_POST["rating"];
     $review = $_POST["review"];
-
+    
+    $word_count = 0;
     if (isset($_SESSION["user_id"])) {
         $user_id = $_SESSION["user_id"];
     } else {
@@ -20,6 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($name != "" && $email != "" && $rating != "" && $review != "") {
+
+        $word_count = str_word_count($review);
+        if($word_count > 250) {
+            $_SESSION["word_count_msg"] = "Feedback must be 250 words or less.";
+                header("Location: review-us.php");
+                exit();
+            }
 
         $sql = "INSERT INTO reviews
                 (
@@ -115,7 +125,7 @@ $result = mysqli_query($conn, $sql);
             margin-bottom: 10px;
         }
 
-        .review-form p {
+        .review-form p:first-of-type {
             text-align: center;
             color: #444;
             margin-bottom: 30px;
@@ -215,6 +225,16 @@ $result = mysqli_query($conn, $sql);
             border-radius: 8px;
             color: #333;
         }
+
+        .word-count {
+            margin-top: 0;
+            justify-self: start;
+        }
+
+        p .word_count{
+            margin-bottom: 5px;
+
+        }
     </style>
 </head>
 
@@ -296,9 +316,17 @@ if (isset($_GET["error"])) {
 
             <textarea
                 name="review"
+                id="review-text"
                 rows="6"
                 placeholder="Tell us about your experience with Photo Impact..."
             ></textarea>
+
+            <p id="word-count" class="word-count">0/250</p>
+            <?php if (!empty($word_count_msg)): ?>
+                <p class="word-count" style="color:red;">
+                    <?= htmlspecialchars($word_count_msg) ?>
+                </p>
+            <?php endif; ?>
 
             <button
                 type="submit"
@@ -370,7 +398,15 @@ if (isset($_GET["error"])) {
 
 <script src="../js/loadHeader.js"></script>
 <script src="../js/loadFooter.js"></script>
+<script>
+    const feedbackInput = document.getElementById("review-text");
+    const wordCountDisplay = document.getElementById("word-count");
 
+    feedbackInput.addEventListener('input', () => {
+        const wordCount = feedbackInput.value.trim().split(/\s+/).filter(word => word.length > 0).length;
+        wordCountDisplay.textContent = `${wordCount}/250`;
+    });
+</script>
 </body>
 
 </html>

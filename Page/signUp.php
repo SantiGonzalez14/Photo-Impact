@@ -83,7 +83,10 @@ if (isset($_POST["submit"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Impact</title>
-
+    
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../style/header.css">
     <link rel="stylesheet" href="../style/footer.css">
     <link rel="stylesheet" href="../style/style.css">
@@ -178,13 +181,19 @@ if (isset($_POST["submit"])) {
 
                 <label for="password">Password:</label>
 
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    size="40"
-                >
+                <div class="password-container">
+                    <div class="icons">
+                        <i class="fa-regular fa-eye toggle-password"></i>
+                    </div>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        class="pass"
+                        placeholder="Enter your password"
+                        size="40"
+                    >
+                </div>
                 <span class="error"><?php echo $passwordErr; ?></span>
 
                 <br>
@@ -211,6 +220,30 @@ if (isset($_POST["submit"])) {
 
     <script src="../js/loadHeader.js"></script>
     <script src="../js/loadFooter.js"></script>
+
+    <script>
+        document.querySelectorAll(".toggle-password").forEach(icon => {
+
+            icon.addEventListener("click", () => {
+
+                const passwordInput =
+                    icon.parentElement.parentElement.querySelector(".pass");
+                console.log(passwordInput);
+
+                if (passwordInput.type === "password") {
+                    console.log("type password");
+                    passwordInput.type = "text";
+                    icon.classList.replace("fa-eye", "fa-eye-slash");
+
+                } else {
+
+                    passwordInput.type = "password";
+                    icon.classList.replace("fa-eye-slash", "fa-eye");
+                }
+            });
+
+        });
+    </script>
 
 </body>
 </html>
